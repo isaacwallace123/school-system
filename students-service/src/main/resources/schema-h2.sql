@@ -4,5 +4,5 @@ create table if not exists students (
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     program VARCHAR(50),
-    stuff TEXT
+    stuff LONGTEXT
 );
