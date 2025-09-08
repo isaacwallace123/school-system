@@ -2,6 +2,7 @@ package com.champlain.enrollmentsservice.domainclientlayer.students;
 
 import com.champlain.enrollmentsservice.domainclientlayer.courses.CourseResponseModel;
 import com.champlain.enrollmentsservice.exceptionhandling.ApplicationExceptions;
+import lombok.Generated;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException.UnprocessableEntity;
@@ -48,14 +49,14 @@ public class StudentServiceClientAsynchronous {
        !! Note my wsl is set to use 6 virtual processors.
      */
 
-
+    @Generated
     public Flux<StudentResponseModel> getAllStudents() {
         return this.webClient
                 .get()
                 .retrieve()
                 .bodyToFlux(StudentResponseModel.class);
     }
-
+    @Generated
     //Gets students by databaseRowId
     public Mono<StudentResponseModel> getStudent(int id) {
         //log.debug(String.format("Calling getStudentAsync(%d)", id));
@@ -67,6 +68,7 @@ public class StudentServiceClientAsynchronous {
                 .bodyToMono(StudentResponseModel.class);
 
     }
+    @Generated
     public Flux<StudentResponseModel> get1000StudentsAsync() {
 
         /* We invoke flatMap to run the getUser method we created previously.
@@ -89,7 +91,7 @@ enrollments-service  | 2024-08-13T19:31:55.520Z  INFO 1 --- [enrollments-service
                 .flatMap(this::getStudent)
                 .doOnNext(s -> log.info("Current thread running " + currentThread()));
     }
-
+    @Generated
     public Flux<StudentResponseModel> get1000StudentsAsyncParallel() {
 
         /* Snippet of results from running this method: up to max cores of io threads and multiple parallel threads (system and load dependant)
@@ -113,7 +115,7 @@ enrollments-service              | 2024-08-20T16:44:49.503Z  INFO 1 --- [enrollm
                 .doOnNext(s -> log.info("Current thread running " + currentThread()))
                 .subscribeOn(Schedulers.parallel());
     }
-
+    @Generated
     public Flux<StudentResponseModel> get1000StudentsAsyncBounded() {
 
         /* Snippet of results from running this method: 1 bounded elastic thread, up to max cores of io threads

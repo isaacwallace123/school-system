@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS courses;
 
 CREATE TABLE IF NOT EXISTS courses (
     id SERIAL,
-    course_id VARCHAR(36),
+    course_id VARCHAR(36) UNIQUE,
     course_number VARCHAR(7),
     course_name VARCHAR(100),
     num_hours SMALLINT,

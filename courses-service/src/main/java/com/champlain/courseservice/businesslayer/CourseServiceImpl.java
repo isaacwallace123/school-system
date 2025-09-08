@@ -24,7 +24,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Mono<CourseResponseModel> getCourseBuCourseId(String courseId) {
+    public Mono<CourseResponseModel> getCourseByCourseId(String courseId) {
         return courseRepository.findCourseByCourseId(courseId).doOnNext(c -> log.debug("Course found has id: {}", c.getCourseId())).map(EntityModelMapper::toModel);
     }
 

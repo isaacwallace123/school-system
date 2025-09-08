@@ -30,7 +30,7 @@ public class CourseController {
         return Mono.just(courseid)
                 .filter(id -> id.length() == 36)
                 .switchIfEmpty(ApplicationExceptions.invalidCourseId(courseid))
-                .flatMap(courseService::getCourseBuCourseId)
+                .flatMap(courseService::getCourseByCourseId)
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(ApplicationExceptions.courseNotFound(courseid));
     }

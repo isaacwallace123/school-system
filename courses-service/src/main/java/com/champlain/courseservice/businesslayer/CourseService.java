@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface CourseService {
     Flux<CourseResponseModel> getAllCourses();
-    Mono<CourseResponseModel> getCourseBuCourseId(String courseId);
+    Mono<CourseResponseModel> getCourseByCourseId(String courseId);
     Mono<CourseResponseModel> addCourse(Mono<CourseRequestModel> courseRequestModel);
     Mono<CourseResponseModel> updateCourse(Mono<CourseRequestModel> courseRequestModel, String courseId);
     Mono<CourseResponseModel> deleteCourse(String courseId);
