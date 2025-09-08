@@ -38,7 +38,8 @@ public class CourseController {
     @PostMapping()
     public Mono<ResponseEntity<CourseResponseModel>> addCourse(@RequestBody Mono<CourseRequestModel> courseRequestModel) {
         return courseRequestModel.transform(RequestValidator.validateBody())
-                .as(courseService::addCourse)
+                //.as(courseService::addCourse)
+                .flatMap(validReq -> courseService.addCourse(Mono.just(validReq)))
                 .map(c -> ResponseEntity.status(HttpStatus.CREATED).body(c));
     }
 
@@ -47,8 +48,12 @@ public class CourseController {
         return Mono.just(courseid)
                 .filter(id -> id.length() == 36)
                 .switchIfEmpty(ApplicationExceptions.invalidCourseId(courseid))
-                .thenReturn(courseRequestModel.transform(RequestValidator.validateBody()))
-                .flatMap(validRequest -> courseService.updateCourse(validRequest, courseid))
+                //.thenReturn(courseRequestModel.transform(RequestValidator.validateBody()))
+                //.flatMap(validRequest -> courseService.updateCourse(validRequest, courseid))
+                .flatMap(validId -> courseRequestModel
+                        .transform(RequestValidator.validateBody())
+                        .flatMap(validReq -> courseService.updateCourse(Mono.just(validReq), validId))
+                )
                 .map(ResponseEntity::ok)
                 .switchIfEmpty(ApplicationExceptions.courseNotFound(courseid));
     }
